@@ -1,6 +1,8 @@
 #include "Sim.h"
 
+HumanManager* HumanManager::instance = 0;
 
+//Instantiate Sim singleton. This is in replace of constructor.
 Sim* Sim::getInstance() {
 	if (!instance) {
 		instance = new Sim;
@@ -8,21 +10,29 @@ Sim* Sim::getInstance() {
 	return instance;
 }
 
-void Sim::begin() {
-	sf::RenderWindow wnd(sf::VideoMode(900, 900), "ViruSim", sf::Style::Close);
+//Create window and instantiate HumanManager
+//For testing purposes, creates a human and puts it into hm
+void Sim::setup() {
+	wnd = new sf::RenderWindow(sf::VideoMode(900, 900), "ViruSim", sf::Style::Close);
+	hm = hm->getInstance();
 	Human h;
-	while (wnd.isOpen())
+	hm->push_back(h);
+}
+
+//Begin main simulation loop
+void Sim::begin() {
+	Human h;
+	while (wnd->isOpen())
 	{
 		sf::Event event;
-		while (wnd.pollEvent(event))
+		while (wnd->pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
-				wnd.close();
+				wnd->close();
 		}
-
-		wnd.clear(sf::Color(0, 30, 30, 0xff));
-		h.update();
-		h.draw(wnd);
-		wnd.display();
+		wnd->clear(sf::Color(0, 30, 30, 0xff));
+		hm->update();
+		hm->draw(*wnd);
+		wnd->display();
 	}
 }
