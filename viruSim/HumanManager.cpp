@@ -21,14 +21,8 @@ void HumanManager::update(sf::Time dt)
 	for (auto i = v.begin(); i != v.end(); i++)
 	{
 		i->check_wall();
+
 		i->update_section();
-		check -= dt.asMicroseconds() * 1000;
-		if (check <= 0)
-		{
-			//check_collision();
-			check = 250;
-			std::cout << "CHECK";
-		}
 		i->update(dt);
 	}
 }
