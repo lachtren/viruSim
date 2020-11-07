@@ -1,6 +1,4 @@
 #include "Sim.h"
-#include "SliderSFML.h"
-
 Sim* Sim::instance = 0;
 
 int main()
