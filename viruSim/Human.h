@@ -11,7 +11,7 @@ eventually most of the member variables of human will be randomly generated.
 class Human
 {
 	int age;
-	int state = 3;
+	int state;
 	bool mask;
 	bool deceased = false;
 	bool infected;
@@ -35,5 +35,8 @@ public:
 	void update(sf::Time);
 	void draw(sf::RenderWindow& wnd);
 	void check_wall();
+	void setState(int);
+	void setMask(bool);
+	void setInfected(bool);
 };
 

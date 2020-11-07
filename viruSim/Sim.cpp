@@ -8,7 +8,8 @@ HumanManager* HumanManager::instance = 0;
 float width = 10; //width/height of arena. Everything scales off of this.
 int age_of_transmission = 6; //not been implemented, not sure if i will.
 int pop_init = 10;
-
+int infected_init = 1;
+int mask_percent = 50;
 
 //This can be cleaned up. Draws arena and grid lines
 void draw_arena(sf::RenderWindow& wnd) {
@@ -41,13 +42,30 @@ Sim* Sim::getInstance() {
 	return instance;
 }
 
+//fills hm with humans
 void fill_hm(HumanManager*hm, float r) {
-	for (int i = 0; i < pop_init; i++) {
+	for (int i = 0; i < pop_init-infected_init; i++) {
 		int v_deg = rand() % 360 + 1;
 		int rand_dist = 8000 - r * 10;
 		auto pos = sf::Vector2f((static_cast<float>((rand() % rand_dist + 300 + r * 10)) / 10.), static_cast<float>(rand() % rand_dist + 300 + r * 10) / 10);
 		auto veloc = sf::Vector2f(cos(v_deg * PI / 180), sin(v_deg * PI / 180));
 		Human h(width, veloc, pos);
+		int mask = rand() % 100 + 0;
+		h.setMask(mask > mask_percent);
+		h.setInfected(0);
+		h.setState(width);
+		hm->push_back(h);
+	}
+	for (int i = 0; i < infected_init; i++) {
+		int v_deg = rand() % 360 + 1;
+		int rand_dist = 8000 - r * 10;
+		auto pos = sf::Vector2f((static_cast<float>((rand() % rand_dist + 300 + r * 10)) / 10.), static_cast<float>(rand() % rand_dist + 300 + r * 10) / 10);
+		auto veloc = sf::Vector2f(cos(v_deg * PI / 180), sin(v_deg * PI / 180));
+		Human h(width, veloc, pos);
+		int mask = rand() % 100 + 0;
+		h.setMask(mask > mask_percent);
+		h.setInfected(1);
+		h.setState(width);
 		hm->push_back(h);
 	}
 }

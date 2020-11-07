@@ -65,3 +65,25 @@ void Human::check_wall() {
 sf::Vector2f Human::get_pos() {
 	return pos;
 }
+
+void Human::setState(int area) {
+	if (infected && !mask)
+		state = 0;
+	else if (!infected && !mask)
+		state = 1;
+	else if (infected && mask)
+		state = 2;
+	else if (!infected && mask)
+		state = 3;
+	if (deceased)
+		state = 4;
+	update_color(area);
+}
+
+void Human::setMask(bool m) {
+	mask = m;
+}
+
+void Human::setInfected(bool i) {
+	infected = i;
+}
