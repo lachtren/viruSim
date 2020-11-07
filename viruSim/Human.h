@@ -7,7 +7,6 @@ Human class takes care of all of the attributes of a single Human.
 
 class Human
 {
-	int age;
 	int state;
 	bool mask;
 	bool deceased = false;

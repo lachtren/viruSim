@@ -21,7 +21,6 @@ void HumanManager::update(sf::Time dt)
 	for (auto i = v.begin(); i != v.end(); i++)
 	{
 		i->check_wall();
-
 		i->update_section();
 		i->update(dt);
 	}
