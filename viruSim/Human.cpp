@@ -1,8 +1,8 @@
 #include "Human.h"
 #include <iostream>
 
-sf::Color mask_color(62, 247, 226, 255);
-sf::Color infect_color(0, 200, 30, 200);
+sf::Color mask_color(0, 247, 30, 255);
+sf::Color infect_color(200, 0, 30, 255);
 sf::Color dead(30, 30, 30, 255);
 const int num_of_sections = 10;
 const int window_size = 800; //830x830 that starts at 30x30

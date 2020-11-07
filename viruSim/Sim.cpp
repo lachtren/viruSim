@@ -5,10 +5,10 @@
 #define PI 3.141592
 HumanManager* HumanManager::instance = 0;
 
-float width = 7; //width/height of arena. Everything scales off of this.
+float width = 9; //width/height of arena. Everything scales off of this.
 int pop_init = 30;
 int infected_init = 4;
-int mask_percent = 100;
+int mask_percent = 70;
 
 //This can be cleaned up. Draws arena and grid lines
 void draw_arena(sf::RenderWindow& wnd) {
@@ -50,7 +50,7 @@ void fill_hm(HumanManager*hm, float r) {
 		auto veloc = sf::Vector2f(cos(v_deg * PI / 180), sin(v_deg * PI / 180));
 		Human h(width, veloc, pos);
 		int mask = rand() % 100 + 0;
-		h.setMask(mask > mask_percent);
+		h.setMask(mask < mask_percent);
 		h.setInfected(0);
 		h.setState(width);
 		hm->push_back(h);
