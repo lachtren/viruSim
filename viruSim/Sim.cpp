@@ -5,13 +5,9 @@
 #define PI 3.141592
 HumanManager* HumanManager::instance = 0;
 
-float width = 9; //width/height of arena. Everything scales off of this.
-int pop_init = 30;
-int infected_init = 4;
-int mask_percent = 70;
 
 //This can be cleaned up. Draws arena and grid lines
-void draw_arena(sf::RenderWindow& wnd) {
+void draw_arena(sf::RenderWindow& wnd, float width) {
 	sf::RectangleShape arena(sf::Vector2f(830.f, 830.f));
 	arena.setPosition(30, 30);
 	arena.setFillColor(sf::Color(0, 20, 20, 20));
@@ -42,7 +38,7 @@ Sim* Sim::getInstance() {
 }
 
 //fills hm with humans
-void fill_hm(HumanManager*hm, float r) {
+void fill_hm(HumanManager*hm, float r, int pop_init, int infected_init, int mask_percent, float width) {
 	for (int i = 0; i < pop_init-infected_init; i++) {
 		int v_deg = rand() % 360 + 1;
 		int rand_dist = 8000 - r * 10;
@@ -76,7 +72,7 @@ void Sim::setup() {
 	wnd = new sf::RenderWindow(sf::VideoMode(1200, 900), "ViruSim", sf::Style::Close);
 	hm = hm->getInstance();
 	float r = 1000 / (pow(width, 2));
-	fill_hm(hm, r);
+	fill_hm(hm, r, pop_init, infected_init, mask_percent, width);
 }
 
 //Begin main simulation loop
@@ -92,7 +88,7 @@ void Sim::begin() {
 		}
 		hm->update(dt);
 		wnd->clear(sf::Color(0, 0, 0, 0xff));
-		draw_arena(*wnd);
+		draw_arena(*wnd, width);
 		hm->draw(*wnd);
 		wnd->display();
 	}
