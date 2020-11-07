@@ -11,27 +11,26 @@ eventually most of the member variables of human will be randomly generated.
 class Human
 {
 	int age;
-	int state = 4;
+	int state = 3;
 	bool mask;
 	bool deceased = false;
 	bool infected;
-	sf::Vector2f vel = sf::Vector2f(.75f,.5f);
-	sf::Vector2f pos = sf::Vector2f(120.f,120.f);
+	sf::Vector2f vel;
+	sf::Vector2f pos;
 	sf::CircleShape circle;
-	float r;
+	
 public:
-	Human(float area) {
+	float r;
+	Human(float area, sf::Vector2f vel_init, sf::Vector2f pos_init) {
+		pos = pos_init;
+		vel = vel_init/area;
 		r = 1000 / (pow(area, 2));
 		update_color(area);
 		circle.setOrigin(r, r);
-		circle.setPosition(pos);
 		circle.setRadius(r);
-		vel = vel / area;
-		std::cout << vel.x << " " << vel.y << std::endl;
 	}
 	//need to implement set_pos() and set_vel()
-	void set_pos();
-	void set_vel();
+	sf::Vector2f get_pos();
 	void update_color(float);
 	void update(sf::Time);
 	void draw(sf::RenderWindow& wnd);

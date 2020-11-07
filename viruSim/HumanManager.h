@@ -16,4 +16,5 @@ public:
 	void update(sf::Time);
 	void draw(sf::RenderWindow&);
 	void check_collision(); //Cant figure this out
+	int check = 250;
 };

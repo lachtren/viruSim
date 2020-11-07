@@ -44,8 +44,24 @@ void Human::update(sf::Time dt) {
 
 //If there is a wall, get negative velocity in the direction of wall hit
 void Human::check_wall() {
-	if (pos.x + r >= 860 || pos.x - r <= 30)
+	if (pos.x + r >= 860) {
 		vel.x *= -1;
-	if (pos.y + r >= 860 || pos.y - r <= 30)
+		pos.x = 860 - r;
+	}
+	else if (pos.x - r <= 30) {
+		pos.x = 30 + r;
+		vel.x *= -1;
+	}
+	if (pos.y + r >= 860) {
 		vel.y *= -1;
+		pos.y = 860 - r;
+	}
+	else if (pos.y - r <= 30) {
+		pos.y = 30 + r;
+		vel.y *= -1;
+	}
+}
+
+sf::Vector2f Human::get_pos() {
+	return pos;
 }
