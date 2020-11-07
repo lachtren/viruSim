@@ -8,17 +8,19 @@ Human class takes care of all of the attributes of a single Human.
 class Human
 {
 	int age;
-	int state = 3;
+	int state = 4;
 	bool mask;
-	sf::Vector2f vel = sf::Vector2f(1.f,1.f);
-	sf::Vector2f pos = sf::Vector2f(50.f,50.f);
+	bool deceased = false;
+	bool infected;
+	sf::Vector2f vel = sf::Vector2f(.75f,.5f);
+	sf::Vector2f pos = sf::Vector2f(120.f,120.f);
 	sf::CircleShape circle;
 	float r;
 public:
 	Human(float area) {
 		r = 1000 / (pow(area, 2));
 		update_color(area);
-		circle.setOrigin(50.f, 50.f);
+		circle.setOrigin(r, r);
 		circle.setPosition(pos);
 		circle.setRadius(r);
 		vel = vel / area;
@@ -30,5 +32,6 @@ public:
 	void update_color(float);
 	void update(sf::Time);
 	void draw(sf::RenderWindow& wnd);
+	void check_wall();
 };
 
