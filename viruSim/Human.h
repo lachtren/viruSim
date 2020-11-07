@@ -38,4 +38,7 @@ public:
 	void draw(sf::RenderWindow &wnd);
 	void check_wall();
 	void update_section();
+	void setState(int);
+	void setMask(bool);
+	void setInfected(bool);
 };

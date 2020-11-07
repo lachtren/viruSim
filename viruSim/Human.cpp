@@ -91,6 +91,7 @@ void Human::update_section()
 		}
 	}
 }
+
 void Human::setState(int area)
 {
 	if (infected && !mask)
