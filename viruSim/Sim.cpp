@@ -2,8 +2,8 @@
 #include <iostream>
 HumanManager* HumanManager::instance = 0;
 
-float width = 12;
-int age_of_transmission = 6;
+float width = 12; //width/height of arena. Everything scales off of this.
+int age_of_transmission = 6; //not been implemented, not sure if i will.
 
 //This can be cleaned up. Draws arena and grid lines
 void draw_arena(sf::RenderWindow& wnd) {
