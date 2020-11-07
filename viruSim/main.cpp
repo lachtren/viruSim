@@ -1,19 +1,10 @@
-#include "SFMLbase.h"
+#include "Sim.h"
+
+Sim* Sim::instance = 0;
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(800, 600), "Hello World!");
-	while (window.isOpen())
-	{
-		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-				window.close();
-		}
-		window.clear(sf::Color(0xff, 0, 0xff, 0xff));
-		window.display();
-	}
-
+	Sim* sim = sim->getInstance();
+	sim->begin();
 	return 0;
 }
