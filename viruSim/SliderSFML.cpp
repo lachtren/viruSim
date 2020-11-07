@@ -1,5 +1,6 @@
 #include "SliderSFML.h"
 
+// Alan added slidersfml.cpp
 
 SliderSFML::SliderSFML(int x, int y)
 {
