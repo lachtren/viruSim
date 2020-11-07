@@ -148,10 +148,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Human.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Sim.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Human.h" />
     <ClInclude Include="SFMLbase.h" />
+    <ClInclude Include="Sim.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
