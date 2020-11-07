@@ -2,8 +2,10 @@
 #include <iostream>
 HumanManager* HumanManager::instance = 0;
 
-float width = 16;
+float width = 12;
+int age_of_transmission = 6;
 
+//This can be cleaned up. Draws arena and grid lines
 void draw_arena(sf::RenderWindow& wnd) {
 	sf::RectangleShape arena(sf::Vector2f(830.f, 830.f));
 	arena.setPosition(30, 30);

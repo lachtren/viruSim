@@ -14,8 +14,11 @@ void HumanManager::push_back(Human h) {
 
 //Update position of all Humans
 void HumanManager::update(sf::Time dt) {
-	for (auto i = v.begin(); i != v.end(); i++)
+	for (auto i = v.begin(); i != v.end(); i++) {
+		i->check_wall();
 		i->update(dt);
+	}
+	
 }
 
 //Draw all Humans
