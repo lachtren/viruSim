@@ -81,15 +81,31 @@ sf::Vector2f Human::get_pos()
 
 void Human::update_section()
 {
-	for (auto first_bound = 0, count = 0; first_bound < window_size; first_bound += window_size / num_of_sections, count++)
+	int area_incriment = window_size / num_of_sections;						 //Size of each section
+	int adjustment_for_window_corner = 30;									 //Due to the fact that the area is 830x830 and not 800x800
+	for (auto first_y_bound = 0, second_y_bound = area_incriment, count = 0; //Create y bounds for each section
+		 first_y_bound < window_size; first_y_bound += area_incriment,
+			  second_y_bound += area_incriment, count++)
 	{
-		int second_bound = first_bound += window_size / num_of_sections;
-		if (pos.x >= first_bound && pos.x <= second_bound && pos.y >= first_bound && pos.y <= second_bound)
-		//if it is within the current section assign it to that section
+		for (auto first_x_bound = 0, second_x_bound = area_incriment; // Create x bounds of each section
+			 first_x_bound < window_size;
+			 first_x_bound += area_incriment, second_x_bound += area_incriment)
 		{
-			section = count;
-		}
-	}
+			//Check if the human is within the sqare
+			if (pos.x - adjustment_for_window_corner >= first_x_bound &&
+				pos.x - adjustment_for_window_corner <= second_x_bound &&
+				pos.y - adjustment_for_window_corner >= first_y_bound &&
+				pos.y - adjustment_for_window_corner <= second_y_bound)
+			// if it is within the current section assign it to that section
+			{
+				section = count;
+				break; //Becasue we found the section we can leave
+			}
+		} //End of x bounds loop
+		if (section == count)
+			break; //Leave loop if we already found the section number
+
+	} //end of y bounds loop
 }
 
 void Human::setState(int area)
