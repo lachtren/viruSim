@@ -3,6 +3,9 @@
 #include <iostream>
 /*
 Human class takes care of all of the attributes of a single Human.
+
+MOST OF THIS CLASS IS HARDCODED FOR TESTING PURPOSES
+eventually most of the member variables of human will be randomly generated.
 */
 
 class Human
