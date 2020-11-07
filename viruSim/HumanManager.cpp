@@ -7,14 +7,15 @@ HumanManager* HumanManager::getInstance() {
 	return instance;
 }
 
+//Add a human
 void HumanManager::push_back(Human h) {
 	v.push_back(h);
 }
 
 //Update position of all Humans
-void HumanManager::update() {
+void HumanManager::update(sf::Time dt) {
 	for (auto i = v.begin(); i != v.end(); i++)
-		i->update();
+		i->update(dt);
 }
 
 //Draw all Humans
