@@ -13,6 +13,6 @@ class HumanManager
 public:
 	static HumanManager* getInstance();
 	void push_back(Human);
-	void update();
+	void update(sf::Time);
 	void draw(sf::RenderWindow&);
 };
