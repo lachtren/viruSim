@@ -15,9 +15,6 @@ void Human::draw(sf::RenderWindow &wnd)
 	wnd.draw(circle);
 }
 
-
-
-
 //update human color based on state (infected or not)
 //need to add additional cases and textures for masks. Will have 4 total.
 void Human::update_color(float area)
