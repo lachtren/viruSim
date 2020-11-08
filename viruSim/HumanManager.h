@@ -16,6 +16,7 @@ class HumanManager
 	int f_rate;
 	int b_rate;
 	int t_rate;
+	int m_rate;
 	
 public:
 	static HumanManager* getInstance();

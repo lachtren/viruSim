@@ -43,7 +43,7 @@ public:
 	
 
 	Sim() {
-		width = 5; pop_init = 3; infected_init = 0; mask_percent = 50;
+		width = 10; pop_init = 60; infected_init = 10; mask_percent = 50;
 		mask_eff = 50;
 		b_rate = 20;
 		f_rate = 20;
