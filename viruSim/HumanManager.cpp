@@ -1,5 +1,6 @@
 #include "HumanManager.h"
 #include <iostream>
+#include <cmath>
 
 //Instantiate HumanManager singleton
 HumanManager *HumanManager::getInstance()
@@ -35,6 +36,34 @@ void HumanManager::draw(sf::RenderWindow &wnd)
 
 void HumanManager::check_collision()
 {
+	for (auto itr = v.begin(); itr != v.end() - 1; itr++)
+	{
+		for (auto itr_2 = itr + 1; itr_2 != v.end(); itr_2++)
+		{
+			if (itr->section.first + 1 == itr_2->section.first ||
+				itr->section.first - 1 == itr_2->section.first
+				|| itr->section.first == itr_2->section.first)
+			{
+				if (itr->section.second + 1 == itr_2->section.second ||
+					itr->section.second - 1 == itr_2->section.second
+					|| itr->section.second == itr_2->section.second)
+				{
+					std::cout << "close to collision" << std::endl;
+					if (std::sqrt(std::pow(itr->get_pos().x - itr_2->get_pos().x, 2) +
+						std::pow(itr->get_pos().y - itr_2->get_pos().y, 2)) < (2 * itr->r)) {
+						itr->setMask(true); //THis just changes the mask color so we could see if collision worked
+						itr->setState(itr->width);
+						itr->update_color(itr->width);
+						itr_2->setMask(true);
+						itr_2->setState(itr->width);
+						itr_2->update_color(itr->width);
+						std::cout << "collison" << std::endl;
+					}
+				}
+			}
+		}
+
+	}
 }
 
 int HumanManager::count_inf() {

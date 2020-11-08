@@ -4,14 +4,20 @@
 sf::Color mask_color(0, 247, 30, 255);
 sf::Color infect_color(200, 0, 30, 255);
 sf::Color dead(30, 30, 30, 255);
-int num_of_sections = 100;
 const int window_size = 800; //830x830 that starts at 30x30
 int section;
+int width = 9; //Link with one in human.h at somepoint
+int r = (1000 / (pow(width, 2))); // link with one in human.h
+int num_of_sections = window_size / r; //TODO: get area and replace 12 with a var
+
 //draw human
 void Human::draw(sf::RenderWindow &wnd)
 {
 	wnd.draw(circle);
 }
+
+
+
 
 //update human color based on state (infected or not)
 //need to add additional cases and textures for masks. Will have 4 total.
@@ -81,7 +87,7 @@ sf::Vector2f Human::get_pos()
 
 void Human::update_section()
 {
-	num_of_sections = window_size / r;
+	
 	//std::cout << num_of_sections << std::endl;
 	for (int i = 1; i < num_of_sections+1; i++) {
 		int left_bound = 30 + (i - 1) * window_size / num_of_sections;
@@ -95,6 +101,7 @@ void Human::update_section()
 		if (pos.y >= upper_bound && pos.y <= lower_bound)
 			section.second = i;
 	}
+	//std::cout << "Section first : " << section.first << ", section second" << section.second << std::endl;
 }
 
 void Human::setState(int area)
