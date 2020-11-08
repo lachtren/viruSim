@@ -21,4 +21,5 @@ public:
 	void update_collisions(sf::Time);
 	void check_collision(sf::Time);
 	int check = 250;
+	void handle_collisions(Human& , Human&);
 };

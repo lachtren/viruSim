@@ -27,6 +27,49 @@ void HumanManager::update(sf::Time dt)
 	}
 }
 
+void HumanManager::handle_collisions(Human& h1, Human& h2)
+{
+	
+	int status; // Will hold the values of infected or not
+	//0 = neither infected
+	//1 = one of the infected
+	//2 = both infected
+
+	if (h1.getInfected() && h2.getInfected())
+		status = 2;
+	else if (!(h1.getInfected() && h2.getInfected()))
+		status = 1;
+	else
+		status = 0;
+
+	if (status == 1) // Only run if one is infected 
+	{
+		int rand_num = rand() % 100; // create a random number to test for transimiton 
+		//if one has mask and other doesnt
+		if (h1.getMask() == true && h2.getMask() == false
+			|| h1.getMask() == false && h2.getMask() == true) {
+			
+		}
+		//if both have mask
+		else if (h1.getMask() == true && h2.getMask() == true)
+		{
+			
+		}
+		//If neither have mask 
+		else if (h1.getMask() == true && h2.getMask() == true)
+		{
+			
+		}
+	}
+	else if (status == 0) // Do birth rate
+	{
+		int rand_num = rand() % 100; // create a random number to test for transimiton 
+	}
+	//if both infected dont do anything
+	
+
+}
+
 //Draw all Humans
 void HumanManager::draw(sf::RenderWindow &wnd)
 {
@@ -57,10 +100,10 @@ void HumanManager::check_collision(sf::Time dt)
 								std::pow(itr->get_pos().y - itr_2->get_pos().y, 2)) < (2 * itr->r)) {
 								itr->colliding = 1;
 								itr_2->colliding = 1;
-								if (itr->getInfected() || itr_2->getInfected()) {
-									itr->setInfected(true);
-									itr_2->setInfected(true);
-								}
+								auto itr_for_ref = *itr;
+								auto itr_2_for_ref = *itr;
+								handle_collisions(itr_for_ref, itr_2_for_ref); //Reference of the human object
+
 							}
 						}
 					}
@@ -93,3 +136,4 @@ void HumanManager::update_collisions(sf::Time dt) {
 		itr->update_colission(time);
 	}
 }
+

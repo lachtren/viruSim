@@ -146,3 +146,7 @@ void Human::setInfected(bool i)
 bool Human::getInfected() {
 	return infected;
 }
+
+bool Human::getMask() {
+	return mask;
+}
