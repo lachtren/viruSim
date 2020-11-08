@@ -8,6 +8,7 @@ Need to implement collision detection and handling
 class HumanManager
 {
 	int check_timer = 250;
+	int babies = 0;
 	static HumanManager* instance;
 	HumanManager() {}
 	std::vector<Human>v;
@@ -23,6 +24,6 @@ public:
 	int check = 250;
 	void clear();
 	void handle_collisions(std::vector<Human>::iterator , std::vector<Human>::iterator);
-	void store_all_vars(int, int,int,int );
+	void store_all_vars(int, int,int,int, int );
 
 };

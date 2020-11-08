@@ -20,11 +20,13 @@ int mask_eff;
 int f_rate;
 int b_rate;
 int t_rate;
+int m_rate;
 
 
 //Update position of all Humans
 void HumanManager::update(sf::Time dt)
 {
+	std::cout << v.size() << std::endl;
 	for (auto i = v.begin(); i != v.end(); i++)
 	{
 		i->check_wall();
@@ -37,8 +39,9 @@ void HumanManager::update(sf::Time dt)
 void HumanManager::store_all_vars(int sim_t_rate,
 	int sim_mask_eff,
 	int sim_f_rate,
-	int sim_b_rate) {
-
+	int sim_b_rate,
+	int sim_m_rate) {
+	m_rate = sim_m_rate;
 	t_rate = sim_t_rate;
 	mask_eff = sim_mask_eff;
 	f_rate = sim_f_rate;
@@ -65,60 +68,60 @@ void HumanManager::handle_collisions(std::vector<Human>::iterator h1, std::vecto
 	if (status == 1) //dont run if both infected
 	{
 		int rand_num = rand() % 100; // create a random number to test for transimiton 
-		/*
-		if (h1.getInfected() == h2.getInfected())
-		{
-			//Calculate birth rate
-			std::cout << "possible birth ";
-			if (rand_num < b_rate)
-				std::cout << "birth" << std::endl;
-			std::cout << std::endl;
-		}
-		*/
-
 		
-		//if one has mask and other doesnt
-		 if ((h1->getMask()  && !h2->getMask() )
-			|| (!h1->getMask()  && h2->getMask() )) {
-			//std::cout << mask_eff << std::endl;
-			double  t_rate_1_mask = t_rate * ((100 - mask_eff) / 100.0);
-			//transmition rate * by the mask effiefficy %
-			//std::cout << t_rate << std::endl;
-			//std::cout << t_rate_1_mask << std::endl;
-
-			if (rand_num < t_rate_1_mask)
-			{
-				h1->setInfected(true);
-				h2->setInfected(true);
-				h1->setState(h1->area_);
-				h2->setState(h2->area_);
-			}
-		}
-
-		//if both have mask
-		else if (h1->getMask() == true && h2->getMask() == true)
+		if (h1->getInfected() == h2->getInfected())
 		{
-			double t_rate_2_mask = t_rate * ((100 - mask_eff) / 100.0) * ((100 - mask_eff) /100.0);
-			//std::cout << t_rate_2_mask << std::endl;
-			//std::cout << rand_num << ": " << t_rate_2_mask << std::endl;
-			if (rand_num < t_rate_2_mask)
-			{
-				//std::cout << "masked collision with transmit" << std::endl;
-				h1->setInfected(true);
-				h2->setInfected(true);
-				h1->setState(h1->area_);
-				h2->setState(h2->area_);
+			if (rand_num < b_rate) {
+				babies++;
 			}
+				
 		}
-		//If neither have mask 
-		else if (h1->getMask() == false && h2->getMask() == false)
-		{
-			if (t_rate >= rand_num)
+		else {
+
+
+			//if one has mask and other doesnt
+			if ((h1->getMask() && !h2->getMask())
+				|| (!h1->getMask() && h2->getMask())) {
+				//std::cout << mask_eff << std::endl;
+				double  t_rate_1_mask = t_rate * ((100 - mask_eff) / 100.0);
+				//transmition rate * by the mask effiefficy %
+				//std::cout << t_rate << std::endl;
+				//std::cout << t_rate_1_mask << std::endl;
+
+				if (rand_num < t_rate_1_mask)
+				{
+					h1->setInfected(true);
+					h2->setInfected(true);
+					h1->setState(h1->area_);
+					h2->setState(h2->area_);
+				}
+			}
+
+			//if both have mask
+			else if (h1->getMask() == true && h2->getMask() == true)
 			{
-				h1->setInfected(true);
-				h2->setInfected(true);
-				h1->setState(h1->area_);
-				h2->setState(h2->area_);
+				double t_rate_2_mask = t_rate * ((100 - mask_eff) / 100.0) * ((100 - mask_eff) / 100.0);
+				//std::cout << t_rate_2_mask << std::endl;
+				//std::cout << rand_num << ": " << t_rate_2_mask << std::endl;
+				if (rand_num < t_rate_2_mask)
+				{
+					//std::cout << "masked collision with transmit" << std::endl;
+					h1->setInfected(true);
+					h2->setInfected(true);
+					h1->setState(h1->area_);
+					h2->setState(h2->area_);
+				}
+			}
+			//If neither have mask 
+			else if (h1->getMask() == false && h2->getMask() == false)
+			{
+				if (t_rate >= rand_num)
+				{
+					h1->setInfected(true);
+					h2->setInfected(true);
+					h1->setState(h1->area_);
+					h2->setState(h2->area_);
+				}
 			}
 		}
 		 
@@ -174,8 +177,22 @@ void HumanManager::check_collision(sf::Time dt)
 				}
 			}
 		}
+		for (int i = 0; i < babies; i++) {
+			int v_deg = rand() % 360 + 1;
+			int rand_dist = 8000 - v[0].r * 10;
+			auto pos = sf::Vector2f((static_cast<float>((rand() % rand_dist + 300 + v[0].r * 10)) / 10.), static_cast<float>(rand() % rand_dist + 300 + v[0].r * 10) / 10);
+			auto veloc = sf::Vector2f(cos(v_deg * 3.14 / 180), sin(v_deg * 3.14 / 180));
+			Human h(v[0].area_, veloc, pos);
+			int mask = rand() % 100 + 0;
+			h.setMask(mask < m_rate);
+			h.setInfected(0);
+			h.setState(v[0].area_);
+			v.push_back(h);
+		}
+		babies = 0;
 		check_timer = 250;
 	}
+
 }
 
 int HumanManager::count_inf() {
