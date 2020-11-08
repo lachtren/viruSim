@@ -16,13 +16,6 @@ void HumanManager::push_back(Human h)
 	v.push_back(h);
 }
 
-int mask_eff;
-int f_rate;
-int b_rate;
-int t_rate;
-int m_rate;
-
-
 //Update position of all Humans
 void HumanManager::update(sf::Time dt)
 {
@@ -32,6 +25,7 @@ void HumanManager::update(sf::Time dt)
 		i->check_wall();
 		i->update_section();
 		i->update(dt);
+		i->death(f_rate);
 	}
 }
 
@@ -55,12 +49,15 @@ void HumanManager::handle_collisions(std::vector<Human>::iterator h1, std::vecto
 {
 	
 	int status; // Will hold the values of infected or not
-	//0 = neither infected
+	//0 = one is dead
 	//1 = one of the infected
 	//2 = both infected
 
 	if (h1->getInfected() && h2->getInfected())
 		status = 2;
+	else if (h1->deceased || h2->deceased) {
+		status = 0;
+	}
 	else 
 		status = 1;
 	
@@ -148,24 +145,27 @@ void HumanManager::check_collision(sf::Time dt)
 			if(!itr->colliding){
 			for (auto itr_2 = itr + 1; itr_2 != v.end(); itr_2++)
 			{
-				if(itr->colliding_cd <=0  && itr_2->colliding_cd <= 0){
-					if (itr->section.first + 1 == itr_2->section.first ||
-						itr->section.first - 1 == itr_2->section.first
-						|| itr->section.first == itr_2->section.first)
-					{
-						if (itr->section.second + 1 == itr_2->section.second ||
-							itr->section.second - 1 == itr_2->section.second
-							|| itr->section.second == itr_2->section.second)
+				if (!(itr->deceased || itr_2->deceased))
+				{
+					if (itr->colliding_cd <= 0 && itr_2->colliding_cd <= 0) {
+						if (itr->section.first + 1 == itr_2->section.first ||
+							itr->section.first - 1 == itr_2->section.first
+							|| itr->section.first == itr_2->section.first)
 						{
-							//std::cout << "close to collision" << std::endl;
-							if (std::sqrt(std::pow(itr->get_pos().x - itr_2->get_pos().x, 2) +
-								std::pow(itr->get_pos().y - itr_2->get_pos().y, 2)) < (2 * itr->r)) {
-								itr->colliding = 1;
-								itr_2->colliding = 1;
+							if (itr->section.second + 1 == itr_2->section.second ||
+								itr->section.second - 1 == itr_2->section.second
+								|| itr->section.second == itr_2->section.second)
+							{
+								//std::cout << "close to collision" << std::endl;
+								if (std::sqrt(std::pow(itr->get_pos().x - itr_2->get_pos().x, 2) +
+									std::pow(itr->get_pos().y - itr_2->get_pos().y, 2)) < (2 * itr->r)) {
+									itr->colliding = 1;
+									itr_2->colliding = 1;
 
-																
-								handle_collisions(itr, itr_2); //Reference of the human object
 
+									handle_collisions(itr, itr_2); //Reference of the human object
+
+								}
 							}
 						}
 					}
