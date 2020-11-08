@@ -9,7 +9,7 @@ Human class takes care of all of the attributes of a single Human.
 class Human
 {
 	int state;
-	bool mask;
+	
 	bool deceased = false;
 	int collide_timer = 2000;
 	bool infected;
@@ -47,4 +47,5 @@ public:
 	bool getInfected();
 	void update_colission(int);
 	bool getMask();
+	bool mask;
 };

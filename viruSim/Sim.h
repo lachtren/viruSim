@@ -43,10 +43,9 @@ public:
 	
 
 	Sim() {
-		width = 12; pop_init = 50; infected_init = 5; mask_percent = 50;
+		width = 5; pop_init = 2; infected_init = 1; mask_percent = 50;
 		mask_eff = 100;
 		b_rate = 20;
-		width = 12; pop_init = 50; infected_init = 5; mask_percent = 40;
 		
 		std::cout << "SET PARAMETERS" << std::endl;
 		std::cout << "*************************" << std::endl;
