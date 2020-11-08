@@ -156,6 +156,7 @@ void Sim::load_stats() {
 	s_v.push_back(stats);
 	stats.setPosition(940.f, 450.f);
 	s_v.push_back(stats);
+	update_stats(sf::Time(sf::seconds(0)));
 }
 
 /*
@@ -200,7 +201,7 @@ void Sim::update_stats(sf::Time dt) {
 		s_v[1].setString("Current population: " + std::to_string(population));
 		s_v[2].setString("Healthy: " + std::to_string(healthy));
 		s_v[3].setString("Infected: " + std::to_string(num_inf));
-		s_v[4].setString("% Infected: " + std::to_string(infected_rate));
+		s_v[4].setString("% Infected: " + std::to_string(infected_rate) + "%");
 		s_v[5].setString("Deceased: " + std::to_string(deceased));
 		stats_timer = 1000;
 	}

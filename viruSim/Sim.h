@@ -13,7 +13,7 @@ class Sim
 	int healthy;
 	int population;
 	int deceased =0;
-	int stats_timer = 0;
+	int stats_timer = 5;
 	bool quit_button = false;
 	bool exit_button = false;
 	float width;
