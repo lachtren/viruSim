@@ -11,8 +11,6 @@ class Human
 	int state;
 	bool mask;
 	bool deceased = false;
-	
-	
 	int collide_timer = 2000;
 	bool infected;
 	sf::Vector2f vel;
@@ -34,7 +32,6 @@ public:
 		circle.setOrigin(r, r);
 		circle.setRadius(r);
 	}
-	//need to implement set_pos() and set_vel()
 	int colliding_cd = 0;
 	sf::Vector2f get_pos();
 	bool colliding = false;
@@ -47,6 +44,5 @@ public:
 	void setMask(bool);
 	void setInfected(bool);
 	bool getInfected();
-	int get_radius();
 	void update_colission(int);
 };

@@ -13,8 +13,8 @@ class Sim
 	int healthy;
 	int population;
 	int deceased =0;
-	int stats_timer = 250;
-
+	int stats_timer = 1000;
+	bool quit_button = false;
 	float width;
 	int pop_init;
 	int infected_init;
@@ -28,10 +28,10 @@ class Sim
 	sf::Text stats;
 	std::vector<sf::Text>s_v;
 	std::vector<sf::Text>p_v;
+
 	static Sim* instance;
 	Sim() {
-		width = 10; pop_init = 50; infected_init = 1; mask_percent = 40;
-
+		width = 12; pop_init = 50; infected_init = 5; mask_percent = 40;
 		/*
 		std::cout << "Virus transmission rate: ";
 		std::cin >> t_rate;
@@ -53,13 +53,16 @@ class Sim
 	}
 	void load_params();
 	void load_stats();
+	void load_buttons();
 	sf::RenderWindow* wnd;
 	HumanManager* hm;
 	sf::Clock clock;
-
-
+	sf::Sprite new_p_spr;
+	sf::Texture new_p_text;
 
 public:
+	
+
 	static Sim* getInstance();
 	void setup();
 	void begin();

@@ -6,7 +6,9 @@
 HumanManager* HumanManager::instance = 0;
 
 
-//This can be cleaned up. Draws arena and grid lines
+/*
+Draws Arena and Grid lines 
+*/
 void draw_arena(sf::RenderWindow& wnd, float width) {
 	sf::RectangleShape arena(sf::Vector2f(830.f, 830.f));
 	arena.setPosition(30, 30);
@@ -36,7 +38,9 @@ void draw_arena(sf::RenderWindow& wnd, float width) {
 	wnd.draw(outline);
 }
 
-//Instantiate Sim singleton. This is in replace of constructor.
+/*
+Creates a single instance of Sim
+*/
 Sim* Sim::getInstance() {
 	if (!instance) {
 		instance = new Sim;
@@ -44,7 +48,9 @@ Sim* Sim::getInstance() {
 	return instance;
 }
 
-//fills hm with humans
+/*
+Takes in many of the user parameters and fills hm.v with the new humans
+*/
 void fill_hm(HumanManager*hm, float r, int pop_init, int infected_init, int mask_percent, float width) {
 	for (int i = 0; i < pop_init-infected_init; i++) {
 		int v_deg = rand() % 360 + 1;
@@ -72,7 +78,9 @@ void fill_hm(HumanManager*hm, float r, int pop_init, int infected_init, int mask
 	}
 }
 
-
+/*
+Loads the text for all of the parameters on screen. Puts them in vector p_v
+*/
 void Sim::load_params() {
 	params.setPosition(sf::Vector2f(965.f, 75.f));
 	params.setFont(font);
@@ -101,6 +109,19 @@ void Sim::load_params() {
 	p_v.push_back(params);
 }
 
+void Sim::load_buttons() {
+	
+	if (!new_p_text.loadFromFile("Assets/new_params.png", sf::IntRect(0,0,240,90))) {
+	}
+
+	new_p_spr.setTexture(new_p_text);
+	new_p_spr.setPosition(sf::Vector2f(916.f, 550.f));
+}
+
+/*
+Loads text for all stats on screen. Because the stats need to be updated frequently, the text is not set.
+That is done in Sim::update_stats
+*/
 void Sim::load_stats() {
 	stats.setPosition(sf::Vector2f(985.f, 300.f));
 	stats.setFont(font);
@@ -121,9 +142,9 @@ void Sim::load_stats() {
 	s_v.push_back(stats);
 }
 
-
-//Create window and instantiate HumanManager
-//For testing purposes, creates a human and puts it into hm
+/*
+Simulation setup, creates window, hm, fills hm, and loads all of the text
+*/
 void Sim::setup() {
 	srand(time(NULL));
 	wnd = new sf::RenderWindow(sf::VideoMode(1200, 900), "ViruSim", sf::Style::Close);
@@ -134,8 +155,12 @@ void Sim::setup() {
 	}
 	load_params();
 	load_stats();
+	load_buttons();
 }
 
+/*
+Displays text
+*/
 void display_text(sf::RenderWindow& wnd, std::vector<sf::Text> p_v, std::vector<sf::Text> s_v) {
 	
 	for (int i = 0; i < p_v.size(); i++)
@@ -144,6 +169,11 @@ void display_text(sf::RenderWindow& wnd, std::vector<sf::Text> p_v, std::vector<
 		wnd.draw(s_v[i]);
 }
 
+
+/*
+Updates the stats that are being displayed to the user. Edits their values in s_v.
+Updates at 1hz
+*/
 void Sim::update_stats(sf::Time dt) {
 	stats_timer -= dt.asMicroseconds() * 1000;
 	if (stats_timer <= 0) {
@@ -156,13 +186,15 @@ void Sim::update_stats(sf::Time dt) {
 		s_v[3].setString("Infected: " + std::to_string(num_inf));
 		s_v[4].setString("% Infected: " + std::to_string(infected_rate));
 		s_v[5].setString("Deceased: " + std::to_string(deceased));
-		stats_timer = 250;
+		stats_timer = 1000;
 	}
 }
 
-//Begin main simulation loop
+/*
+Main simulation loop
+*/
 void Sim::begin() {
-	while (wnd->isOpen())
+	while (wnd->isOpen() || quit_button == false)
 	{
 		sf::Time dt = clock.restart();
 		sf::Event event;
@@ -180,6 +212,7 @@ void Sim::begin() {
 		draw_arena(*wnd, width);
 		hm->draw(*wnd);
 		display_text(*wnd, p_v, s_v);
+		wnd->draw(new_p_spr);
 		wnd->display();
 
 		
