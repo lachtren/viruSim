@@ -23,6 +23,10 @@ class Sim
 	sf::Text stats;
 	std::vector<sf::Text>s_v;
 	std::vector<sf::Text>p_v;
+	int t_rate;
+	int mask_eff;
+	int f_rate;
+	int b_rate;
 
 	int infected_init;
 	int mask_percent;
@@ -44,6 +48,9 @@ public:
 	
 
 	Sim() {
+		width = 12; pop_init = 50; infected_init = 5; mask_percent = 50;
+		mask_eff = 100;
+		b_rate = 20;
 		width = 12; pop_init = 50; infected_init = 5; mask_percent = 40;
 		
 		std::cout << "SET PARAMETERS" << std::endl;
@@ -73,8 +80,7 @@ public:
 
 public:
 	
-	
-	
+
 	int t_rate;
 	int mask_eff;
 	int f_rate;

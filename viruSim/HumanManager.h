@@ -23,4 +23,6 @@ public:
 	int check = 250;
 	void clear();
 	void handle_collisions(Human& , Human&);
+	void store_all_vars(int, int,int,int );
+
 };

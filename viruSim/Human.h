@@ -16,7 +16,7 @@ class Human
 	sf::Vector2f vel;
 	sf::Vector2f pos;
 	sf::CircleShape circle;
-	float area_;
+
 
 public:
 	std::pair<int, int> section;
@@ -32,6 +32,7 @@ public:
 		circle.setOrigin(r, r);
 		circle.setRadius(r);
 	}
+	float area_;
 	int colliding_cd = 0;
 	sf::Vector2f get_pos();
 	bool colliding = false;
