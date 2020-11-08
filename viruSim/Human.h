@@ -9,9 +9,8 @@ Human class takes care of all of the attributes of a single Human.
 class Human
 {
 	int state;
-	
-	bool deceased = false;
-	int collide_timer = 2000;
+	bool mask;
+		int collide_timer = 2000;
 	bool infected;
 	sf::Vector2f vel;
 	sf::Vector2f pos;
@@ -21,6 +20,7 @@ class Human
 public:
 	std::pair<int, int> section;
 	int width;
+	float area_;
 	float r;
 	Human(float area, sf::Vector2f vel_init, sf::Vector2f pos_init)
 	{
@@ -32,7 +32,8 @@ public:
 		circle.setOrigin(r, r);
 		circle.setRadius(r);
 	}
-	float area_;
+	bool deceased = false;
+	void death(int);
 	int colliding_cd = 0;
 	sf::Vector2f get_pos();
 	bool colliding = false;
@@ -47,5 +48,4 @@ public:
 	bool getInfected();
 	void update_colission(int);
 	bool getMask();
-	bool mask;
 };

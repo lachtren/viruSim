@@ -56,6 +56,20 @@ void Human::update(sf::Time dt)
 	}
 }
 
+void Human::death(int f_rate) {
+	int rand_num = rand() % 100000;
+	if (infected) {
+		if (rand_num < f_rate)
+		{
+			state = 4;
+			update_color(area_);
+			deceased = true;
+			vel = sf::Vector2f(0, 0);
+		}
+	}
+	
+}
+
 //If there is a wall, get negative velocity in the direction of wall hit
 void Human::check_wall()
 {

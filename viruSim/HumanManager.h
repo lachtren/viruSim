@@ -11,6 +11,11 @@ class HumanManager
 	static HumanManager* instance;
 	HumanManager() {}
 	std::vector<Human>v;
+	int mask_eff;
+	int f_rate;
+	int b_rate;
+	int t_rate;
+	
 public:
 	static HumanManager* getInstance();
 	void push_back(Human);
