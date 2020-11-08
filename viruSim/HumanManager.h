@@ -18,6 +18,7 @@ public:
 	void draw(sf::RenderWindow&);
 	int count_inf();
 	int population();
+	void update_collisions(sf::Time);
 	void check_collision(sf::Time); //Cant figure this out
 	int check = 250;
 };

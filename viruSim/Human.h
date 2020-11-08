@@ -11,10 +11,14 @@ class Human
 	int state;
 	bool mask;
 	bool deceased = false;
+	
+	
+	int collide_timer = 2000;
 	bool infected;
 	sf::Vector2f vel;
 	sf::Vector2f pos;
 	sf::CircleShape circle;
+	float area_;
 
 public:
 	std::pair<int, int> section;
@@ -23,6 +27,7 @@ public:
 	Human(float area, sf::Vector2f vel_init, sf::Vector2f pos_init)
 	{
 		pos = pos_init;
+		area_ = area;
 		vel = vel_init / area;
 		r = 1000 / (pow(area, 2));
 		update_color(area);
@@ -30,7 +35,9 @@ public:
 		circle.setRadius(r);
 	}
 	//need to implement set_pos() and set_vel()
+	int colliding_cd = 0;
 	sf::Vector2f get_pos();
+	bool colliding = false;
 	void update_color(float);
 	void update(sf::Time);
 	void draw(sf::RenderWindow &wnd);
@@ -41,4 +48,5 @@ public:
 	void setInfected(bool);
 	bool getInfected();
 	int get_radius();
+	void update_colission(int);
 };

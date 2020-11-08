@@ -48,10 +48,12 @@ void Human::update_color(float area)
 //Update human position
 void Human::update(sf::Time dt)
 {
-	pos.x += vel.x * dt.asMicroseconds() / 1000; //microseconds was rounding so i did this.
-	pos.y += vel.y * dt.asMicroseconds() / 1000;
-	circle.setPosition(pos);
-	update_section();
+	if (colliding == false) {
+		pos.x += vel.x * dt.asMicroseconds() / 1000; //microseconds was rounding so i did this.
+		pos.y += vel.y * dt.asMicroseconds() / 1000;
+		circle.setPosition(pos);
+		update_section();
+	}
 }
 
 //If there is a wall, get negative velocity in the direction of wall hit
@@ -101,6 +103,19 @@ void Human::update_section()
 			section.second = i;
 	}
 	//std::cout << "Section first : " << section.first << ", section second" << section.second << std::endl;
+}
+
+void Human::update_colission(int dt) {
+	collide_timer -= dt;
+	if (collide_timer <= 0) {
+		colliding = 0;
+		colliding_cd = 1000;
+		collide_timer = 2000;
+	}
+	else if (collide_timer <= 1250) {
+		setState(area_);
+		update_color(area_);
+	}
 }
 
 void Human::setState(int area)

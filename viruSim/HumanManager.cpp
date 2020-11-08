@@ -40,36 +40,35 @@ void HumanManager::check_collision(sf::Time dt)
 	if(check_timer <=0){
 		for (auto itr = v.begin(); itr != v.end() - 1; itr++)
 		{
+			if(!itr->colliding){
 			for (auto itr_2 = itr + 1; itr_2 != v.end(); itr_2++)
 			{
-				if (itr->section.first + 1 == itr_2->section.first ||
-					itr->section.first - 1 == itr_2->section.first
-					|| itr->section.first == itr_2->section.first)
-				{
-					if (itr->section.second + 1 == itr_2->section.second ||
-						itr->section.second - 1 == itr_2->section.second
-						|| itr->section.second == itr_2->section.second)
+				if(itr->colliding_cd <=0  && itr_2->colliding_cd <= 0){
+					if (itr->section.first + 1 == itr_2->section.first ||
+						itr->section.first - 1 == itr_2->section.first
+						|| itr->section.first == itr_2->section.first)
 					{
-						//std::cout << "close to collision" << std::endl;
-						if (std::sqrt(std::pow(itr->get_pos().x - itr_2->get_pos().x, 2) +
-							std::pow(itr->get_pos().y - itr_2->get_pos().y, 2)) < (2 * itr->r)) {
-							if (itr->getInfected() || itr_2->getInfected()) {
-								itr->setInfected(true);
-								itr_2->setInfected(true);
-								itr->setState(itr->width);
-								itr->update_color(itr->width);
-								itr_2->setState(itr->width);
-								itr_2->update_color(itr->width);
+						if (itr->section.second + 1 == itr_2->section.second ||
+							itr->section.second - 1 == itr_2->section.second
+							|| itr->section.second == itr_2->section.second)
+						{
+							//std::cout << "close to collision" << std::endl;
+							if (std::sqrt(std::pow(itr->get_pos().x - itr_2->get_pos().x, 2) +
+								std::pow(itr->get_pos().y - itr_2->get_pos().y, 2)) < (2 * itr->r)) {
+								itr->colliding = 1;
+								itr_2->colliding = 1;
+								if (itr->getInfected() || itr_2->getInfected()) {
+									itr->setInfected(true);
+									itr_2->setInfected(true);
+								}
 							}
-							/*
-							itr->setMask(true); //THis just changes the mask color so we could see if collision worked
-							
-							itr_2->setMask(true);
-							
-							std::cout << "collison" << std::endl;
-							*/
 						}
 					}
+				}
+				if (itr->colliding_cd >= 0)
+					itr->colliding_cd -= dt.asMicroseconds()/1000;
+				if (itr_2->colliding_cd >= 0)
+					itr_2->colliding_cd -= dt.asMicroseconds() / 1000;
 				}
 			}
 		}
@@ -85,4 +84,12 @@ int HumanManager::count_inf() {
 
 int HumanManager::population() {
 	return v.size();
+}
+
+void HumanManager::update_collisions(sf::Time dt) {
+	int time = dt.asMicroseconds() / 1000;
+	for (auto itr = v.begin(); itr != v.end(); itr++) {
+		if(itr->colliding)
+		itr->update_colission(time);
+	}
 }

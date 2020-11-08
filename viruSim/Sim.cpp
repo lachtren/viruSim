@@ -173,6 +173,7 @@ void Sim::begin() {
 		}
 		hm->update(dt);
 		hm->check_collision(dt);
+		hm->update_collisions(dt);
 		update_stats(dt);
 		//load_stats();
 		wnd->clear(sf::Color(0, 0, 0, 0xff));
