@@ -168,7 +168,7 @@ void Sim::setup() {
 	hm = hm->getInstance();
 	float r = 1000 / (pow(width, 2));
 	fill_hm(hm, r, pop_init, infected_init, mask_percent, width);
-	hm->store_all_vars(t_rate, mask_eff, f_rate, b_rate);
+	hm->store_all_vars(t_rate, mask_eff, f_rate, b_rate, mask_percent);
 	if (!font.loadFromFile("Assets/Oswald-VariableFont_wght.ttf")) {
 	}
 	load_params();
