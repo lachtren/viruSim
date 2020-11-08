@@ -4,7 +4,7 @@
 sf::Color mask_color(0, 247, 30, 255);
 sf::Color infect_color(200, 0, 30, 255);
 sf::Color dead(30, 30, 30, 255);
-const int num_of_sections = 10;
+int num_of_sections = 100;
 const int window_size = 800; //830x830 that starts at 30x30
 int section;
 //draw human
@@ -81,6 +81,22 @@ sf::Vector2f Human::get_pos()
 
 void Human::update_section()
 {
+<<<<<<< HEAD
+	num_of_sections = window_size / r;
+	//std::cout << num_of_sections << std::endl;
+	for (int i = 1; i < num_of_sections+1; i++) {
+		int left_bound = 30 + (i - 1) * window_size / num_of_sections;
+		int right_bound = 30 + i * window_size / num_of_sections;
+		if (pos.x >= left_bound && pos.x <= right_bound)
+			section.first = i;
+	}
+	for (int i = 1; i < num_of_sections + 1; i++) {
+		int upper_bound = 30 + (i - 1) * window_size / num_of_sections;
+		int lower_bound = 30 + i * window_size / num_of_sections;
+		if (pos.y >= upper_bound && pos.y <= lower_bound)
+			section.second = i;
+	}
+=======
 	int area_incriment = window_size / num_of_sections;						 //Size of each section
 	int adjustment_for_window_corner = 30;									 //Due to the fact that the area is 830x830 and not 800x800
 	for (auto first_y_bound = 0, second_y_bound = area_incriment, count = 0; //Create y bounds for each section
@@ -106,6 +122,7 @@ void Human::update_section()
 			break; //Leave loop if we already found the section number
 
 	} //end of y bounds loop
+>>>>>>> 4db8cfb580979dfd8f0a4ff56ee10eb9ba319d3a
 }
 
 void Human::setState(int area)
@@ -131,4 +148,8 @@ void Human::setMask(bool m)
 void Human::setInfected(bool i)
 {
 	infected = i;
+}
+
+bool Human::getInfected() {
+	return infected;
 }

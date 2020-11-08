@@ -1,6 +1,7 @@
 #pragma once
 #include "SFMLbase.h"
 #include <iostream>
+#include <utility>
 /*
 Human class takes care of all of the attributes of a single Human.
 */
@@ -14,7 +15,7 @@ class Human
 	sf::Vector2f vel;
 	sf::Vector2f pos;
 	sf::CircleShape circle;
-	int section;
+	std::pair<int,int> section;
 
 public:
 	float r;
@@ -37,4 +38,5 @@ public:
 	void setState(int);
 	void setMask(bool);
 	void setInfected(bool);
+	bool getInfected();
 };
