@@ -22,7 +22,7 @@ public:
 	void check_collision(sf::Time);
 	int check = 250;
 	void clear();
-	void handle_collisions(Human& , Human&);
+	void handle_collisions(std::vector<Human>::iterator , std::vector<Human>::iterator);
 	void store_all_vars(int, int,int,int );
 
 };
