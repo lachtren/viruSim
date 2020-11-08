@@ -15,9 +15,10 @@ class Human
 	sf::Vector2f vel;
 	sf::Vector2f pos;
 	sf::CircleShape circle;
-	std::pair<int,int> section;
 
 public:
+	std::pair<int, int> section;
+	int width;
 	float r;
 	Human(float area, sf::Vector2f vel_init, sf::Vector2f pos_init)
 	{
@@ -39,4 +40,5 @@ public:
 	void setMask(bool);
 	void setInfected(bool);
 	bool getInfected();
+	int get_radius();
 };
