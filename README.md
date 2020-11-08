@@ -1,6 +1,7 @@
 # Virus simulation
 
 This project is made to simulate an epidemic in different environments with different user-defined parameters.
+Made for hackPSU hackathon
 
 ## Build Instructions
 
