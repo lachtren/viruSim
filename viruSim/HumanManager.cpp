@@ -75,7 +75,7 @@ void HumanManager::handle_collisions(Human& h1, Human& h2)
 			std::cout << std::endl;
 		}
 		*/
-
+		
 		
 		//if one has mask and other doesnt
 		 if ((h1.getMask()  && !h2.getMask() )
@@ -156,8 +156,10 @@ void HumanManager::check_collision(sf::Time dt)
 								std::pow(itr->get_pos().y - itr_2->get_pos().y, 2)) < (2 * itr->r)) {
 								itr->colliding = 1;
 								itr_2->colliding = 1;
+								std::cout << itr->getMask();
+								std::cout << itr_2->getMask();
 								auto itr_for_ref = *itr;
-								auto itr_2_for_ref = *itr;
+								auto itr_2_for_ref = *itr_2;
 								handle_collisions(itr_for_ref, itr_2_for_ref); //Reference of the human object
 
 							}
