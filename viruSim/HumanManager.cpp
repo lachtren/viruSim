@@ -125,6 +125,10 @@ int HumanManager::count_inf() {
 		});
 }
 
+void HumanManager::clear() {
+	v.clear();
+}
+
 int HumanManager::population() {
 	return v.size();
 }

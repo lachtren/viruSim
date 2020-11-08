@@ -217,6 +217,8 @@ void Sim::begin() {
 		wnd->draw(new_p_spr);
 		wnd->display();
 		check_mouse();
+		
 	}
+	hm->clear();
 	wnd->close();
 }
