@@ -39,16 +39,6 @@ void draw_arena(sf::RenderWindow& wnd, float width) {
 }
 
 /*
-Creates a single instance of Sim
-*/
-Sim* Sim::getInstance() {
-	if (!instance) {
-		instance = new Sim;
-	}
-	return instance;
-}
-
-/*
 Takes in many of the user parameters and fills hm.v with the new humans
 */
 void fill_hm(HumanManager*hm, float r, int pop_init, int infected_init, int mask_percent, float width) {
@@ -75,6 +65,17 @@ void fill_hm(HumanManager*hm, float r, int pop_init, int infected_init, int mask
 		h.setInfected(1);
 		h.setState(width);
 		hm->push_back(h);
+	}
+}
+
+void Sim::check_mouse() {
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left)) {
+		sf::Vector2i mouse_pos = sf::Mouse::getPosition(*wnd);
+		if (mouse_pos.x >= 916 && mouse_pos.x <= 916 + 240) {
+			if (mouse_pos.y >= 550 && mouse_pos.y <= 550 + 90) {
+				quit_button = 1;
+			}
+		}
 	}
 }
 
@@ -108,6 +109,7 @@ void Sim::load_params() {
 	params.setPosition(940.f, 250.f);
 	p_v.push_back(params);
 }
+
 
 void Sim::load_buttons() {
 	
@@ -194,7 +196,7 @@ void Sim::update_stats(sf::Time dt) {
 Main simulation loop
 */
 void Sim::begin() {
-	while (wnd->isOpen() || quit_button == false)
+	while (wnd->isOpen() && quit_button == false)
 	{
 		sf::Time dt = clock.restart();
 		sf::Event event;
@@ -214,7 +216,7 @@ void Sim::begin() {
 		display_text(*wnd, p_v, s_v);
 		wnd->draw(new_p_spr);
 		wnd->display();
-
-		
+		check_mouse();
 	}
+	wnd->close();
 }
