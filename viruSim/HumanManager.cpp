@@ -48,7 +48,7 @@ void HumanManager::store_all_vars(int sim_t_rate,
 
 
 //What happens when 2 particles collide
-void HumanManager::handle_collisions(Human& h1, Human& h2)
+void HumanManager::handle_collisions(std::vector<Human>::iterator h1, std::vector<Human>::iterator h2)
 {
 	
 	int status; // Will hold the values of infected or not
@@ -56,7 +56,7 @@ void HumanManager::handle_collisions(Human& h1, Human& h2)
 	//1 = one of the infected
 	//2 = both infected
 
-	if (h1.getInfected() && h2.getInfected())
+	if (h1->getInfected() && h2->getInfected())
 		status = 2;
 	else 
 		status = 1;
@@ -75,50 +75,53 @@ void HumanManager::handle_collisions(Human& h1, Human& h2)
 			std::cout << std::endl;
 		}
 		*/
-		
+
 		
 		//if one has mask and other doesnt
-		 if ((h1.getMask()  && !h2.getMask() )
-			|| (!h1.getMask()  && h2.getMask() )) {
-			int t_rate_1_mask = t_rate * (mask_eff / 100); //transmition rate * by the mask effiefficy %
-			std::cout << "enter io";
-			if (t_rate_1_mask)
+		 if ((h1->getMask()  && !h2->getMask() )
+			|| (!h1->getMask()  && h2->getMask() )) {
+			//std::cout << mask_eff << std::endl;
+			double  t_rate_1_mask = t_rate * ((100 - mask_eff) / 100.0);
+			//transmition rate * by the mask effiefficy %
+			//std::cout << t_rate << std::endl;
+			//std::cout << t_rate_1_mask << std::endl;
+
+			if (rand_num < t_rate_1_mask)
 			{
-				std::cout << "Collision  with 1/0 mask" << std::endl;
-				h1.setInfected(true);
-				h2.setInfected(true);
-				h1.setState(h1.area_);
-				h2.setState(h2.area_);
+				h1->setInfected(true);
+				h2->setInfected(true);
+				h1->setState(h1->area_);
+				h2->setState(h2->area_);
 			}
 		}
 
 		//if both have mask
-		else if (h1.getMask() == true && h2.getMask() == true)
+		else if (h1->getMask() == true && h2->getMask() == true)
 		{
-			int t_rate_1_mask = t_rate * (mask_eff / 100) * (mask_eff /100);
-			std::cout << "Enter mask coll" << std::endl;
-			if (t_rate_1_mask >= rand_num)
+			double t_rate_2_mask = t_rate * ((100 - mask_eff) / 100.0) * ((100 - mask_eff) /100.0);
+			//std::cout << t_rate_2_mask << std::endl;
+			//std::cout << rand_num << ": " << t_rate_2_mask << std::endl;
+			if (rand_num < t_rate_2_mask)
 			{
-				std::cout << "Collision with mask" << std::endl;
-				h1.setInfected(true);
-				h2.setInfected(true);
-				h1.setState(h1.area_);
-				h2.setState(h2.area_);
+				//std::cout << "masked collision with transmit" << std::endl;
+				h1->setInfected(true);
+				h2->setInfected(true);
+				h1->setState(h1->area_);
+				h2->setState(h2->area_);
 			}
 		}
 		//If neither have mask 
-		else if (h1.getMask() == false && h2.getMask() == false)
+		else if (h1->getMask() == false && h2->getMask() == false)
 		{
-			std::cout << "Enter no mask coll" << std::endl;
 			if (t_rate >= rand_num)
 			{
-				std::cout << "Collision with no mask" << std::endl;
-				h1.setInfected(true);
-				h2.setInfected(true);
-				h1.setState(h1.area_);
-				h2.setState(h2.area_);
+				h1->setInfected(true);
+				h2->setInfected(true);
+				h1->setState(h1->area_);
+				h2->setState(h2->area_);
 			}
 		}
+		 
 	}
 
 	//if both infected dont do anything
@@ -156,11 +159,9 @@ void HumanManager::check_collision(sf::Time dt)
 								std::pow(itr->get_pos().y - itr_2->get_pos().y, 2)) < (2 * itr->r)) {
 								itr->colliding = 1;
 								itr_2->colliding = 1;
-								std::cout << itr->getMask();
-								std::cout << itr_2->getMask();
-								auto itr_for_ref = *itr;
-								auto itr_2_for_ref = *itr_2;
-								handle_collisions(itr_for_ref, itr_2_for_ref); //Reference of the human object
+
+																
+								handle_collisions(itr, itr_2); //Reference of the human object
 
 							}
 						}
