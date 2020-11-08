@@ -15,6 +15,7 @@ class Sim
 	int deceased =0;
 	int stats_timer = 0;
 	bool quit_button = false;
+	bool exit_button = false;
 	float width;
 	int pop_init;
 	sf::Font font;
