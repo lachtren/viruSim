@@ -16,6 +16,12 @@ void HumanManager::push_back(Human h)
 	v.push_back(h);
 }
 
+int mask_eff;
+int f_rate;
+int b_rate;
+int t_rate;
+
+
 //Update position of all Humans
 void HumanManager::update(sf::Time dt)
 {
@@ -27,6 +33,21 @@ void HumanManager::update(sf::Time dt)
 	}
 }
 
+//Update the variables for the the collison deteection
+void HumanManager::store_all_vars(int sim_t_rate,
+	int sim_mask_eff,
+	int sim_f_rate,
+	int sim_b_rate) {
+
+	t_rate = sim_t_rate;
+	mask_eff = sim_mask_eff;
+	f_rate = sim_f_rate;
+	b_rate = sim_b_rate;
+}
+
+
+
+//What happens when 2 particles collide
 void HumanManager::handle_collisions(Human& h1, Human& h2)
 {
 	
@@ -37,34 +58,69 @@ void HumanManager::handle_collisions(Human& h1, Human& h2)
 
 	if (h1.getInfected() && h2.getInfected())
 		status = 2;
-	else if (!(h1.getInfected() && h2.getInfected()))
+	else 
 		status = 1;
-	else
-		status = 0;
+	
 
-	if (status == 1) // Only run if one is infected 
+	if (status == 1) //dont run if both infected
 	{
 		int rand_num = rand() % 100; // create a random number to test for transimiton 
-		//if one has mask and other doesnt
-		if (h1.getMask() == true && h2.getMask() == false
-			|| h1.getMask() == false && h2.getMask() == true) {
-			
+		/*
+		if (h1.getInfected() == h2.getInfected())
+		{
+			//Calculate birth rate
+			std::cout << "possible birth ";
+			if (rand_num < b_rate)
+				std::cout << "birth" << std::endl;
+			std::cout << std::endl;
 		}
+		*/
+
+		
+		//if one has mask and other doesnt
+		 if ((h1.getMask()  && !h2.getMask() )
+			|| (!h1.getMask()  && h2.getMask() )) {
+			int t_rate_1_mask = t_rate * (mask_eff / 100); //transmition rate * by the mask effiefficy %
+			std::cout << "enter io";
+			if (t_rate_1_mask)
+			{
+				std::cout << "Collision  with 1/0 mask" << std::endl;
+				h1.setInfected(true);
+				h2.setInfected(true);
+				h1.setState(h1.area_);
+				h2.setState(h2.area_);
+			}
+		}
+
 		//if both have mask
 		else if (h1.getMask() == true && h2.getMask() == true)
 		{
-			
+			int t_rate_1_mask = t_rate * (mask_eff / 100) * (mask_eff /100);
+			std::cout << "Enter mask coll" << std::endl;
+			if (t_rate_1_mask >= rand_num)
+			{
+				std::cout << "Collision with mask" << std::endl;
+				h1.setInfected(true);
+				h2.setInfected(true);
+				h1.setState(h1.area_);
+				h2.setState(h2.area_);
+			}
 		}
 		//If neither have mask 
-		else if (h1.getMask() == true && h2.getMask() == true)
+		else if (h1.getMask() == false && h2.getMask() == false)
 		{
-			
+			std::cout << "Enter no mask coll" << std::endl;
+			if (t_rate >= rand_num)
+			{
+				std::cout << "Collision with no mask" << std::endl;
+				h1.setInfected(true);
+				h2.setInfected(true);
+				h1.setState(h1.area_);
+				h2.setState(h2.area_);
+			}
 		}
 	}
-	else if (status == 0) // Do birth rate
-	{
-		int rand_num = rand() % 100; // create a random number to test for transimiton 
-	}
+
 	//if both infected dont do anything
 	
 
