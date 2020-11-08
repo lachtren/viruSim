@@ -23,11 +23,6 @@ class Sim
 	sf::Text stats;
 	std::vector<sf::Text>s_v;
 	std::vector<sf::Text>p_v;
-	int t_rate;
-	int mask_eff;
-	int f_rate;
-	int b_rate;
-
 	int infected_init;
 	int mask_percent;
 	static Sim* instance;
