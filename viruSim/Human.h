@@ -45,4 +45,5 @@ public:
 	void setInfected(bool);
 	bool getInfected();
 	void update_colission(int);
+	bool getMask();
 };
