@@ -31,5 +31,5 @@ public:
 	void clear();
 	void handle_collisions(std::vector<Human>::iterator , std::vector<Human>::iterator);
 	void store_all_vars(int, int,int,int, int );
-
+	int deceased();
 };

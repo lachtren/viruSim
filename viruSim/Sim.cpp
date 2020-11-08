@@ -196,8 +196,9 @@ void Sim::update_stats(sf::Time dt) {
 	stats_timer -= dt.asMicroseconds() * 1000;
 	if (stats_timer <= 0) {
 		num_inf = hm->count_inf();
-		healthy = hm->population() - num_inf;
-		population = hm->population();
+		deceased = hm->deceased();
+		population = hm->population() - deceased;
+		healthy = hm->population() - num_inf - deceased;
 		infected_rate = static_cast<double>(num_inf) / static_cast<double>(hm->population())*100;
 		s_v[1].setString("Current population: " + std::to_string(population));
 		s_v[2].setString("Healthy: " + std::to_string(healthy));
@@ -207,6 +208,7 @@ void Sim::update_stats(sf::Time dt) {
 		stats_timer = 1000;
 	}
 }
+
 
 /*
 Main simulation loop
