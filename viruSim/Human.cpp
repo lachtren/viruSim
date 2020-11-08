@@ -4,7 +4,7 @@
 sf::Color mask_color(0, 247, 30, 255);
 sf::Color infect_color(200, 0, 30, 255);
 sf::Color dead(30, 30, 30, 255);
-const int num_of_sections = 10;
+int num_of_sections = 100;
 const int window_size = 800; //830x830 that starts at 30x30
 int section;
 //draw human
@@ -81,14 +81,19 @@ sf::Vector2f Human::get_pos()
 
 void Human::update_section()
 {
-	for (auto first_bound = 0, count = 0; first_bound < window_size; first_bound += window_size / num_of_sections, count++)
-	{
-		int second_bound = first_bound += window_size / num_of_sections;
-		if (pos.x >= first_bound && pos.x <= second_bound && pos.y >= first_bound && pos.y <= second_bound)
-		//if it is within the current section assign it to that section
-		{
-			section = count;
-		}
+	num_of_sections = window_size / r;
+	//std::cout << num_of_sections << std::endl;
+	for (int i = 1; i < num_of_sections+1; i++) {
+		int left_bound = 30 + (i - 1) * window_size / num_of_sections;
+		int right_bound = 30 + i * window_size / num_of_sections;
+		if (pos.x >= left_bound && pos.x <= right_bound)
+			section.first = i;
+	}
+	for (int i = 1; i < num_of_sections + 1; i++) {
+		int upper_bound = 30 + (i - 1) * window_size / num_of_sections;
+		int lower_bound = 30 + i * window_size / num_of_sections;
+		if (pos.y >= upper_bound && pos.y <= lower_bound)
+			section.second = i;
 	}
 }
 
@@ -115,4 +120,8 @@ void Human::setMask(bool m)
 void Human::setInfected(bool i)
 {
 	infected = i;
+}
+
+bool Human::getInfected() {
+	return infected;
 }
