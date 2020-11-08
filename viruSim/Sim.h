@@ -17,17 +17,14 @@ class Sim
 	bool quit_button = false;
 	float width;
 	int pop_init;
-	int infected_init;
-	int mask_percent;
-	int t_rate;
-	int mask_eff;
-	int f_rate;
-	int b_rate;
 	sf::Font font;
 	sf::Text params;
 	sf::Text stats;
 	std::vector<sf::Text>s_v;
 	std::vector<sf::Text>p_v;
+
+	int infected_init;
+	int mask_percent;
 	static Sim* instance;
 	void load_params();
 	void load_stats();
@@ -66,10 +63,15 @@ public:
 		*/
 	}
 
-	~Sim() {
-
-	}
-
+public:
+	
+	
+	
+	int t_rate;
+	int mask_eff;
+	int f_rate;
+	int b_rate;
+	static Sim* getInstance();
 	void setup();
 	void begin();
 	void update_stats(sf::Time);
