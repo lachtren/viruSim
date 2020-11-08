@@ -37,12 +37,19 @@ class Sim
 	sf::Sprite new_p_spr;
 	sf::Texture new_p_text;
 
+	sf::Sprite quit_spr;
+	sf::Texture quit_text;
+
 public:
 	
 
 	Sim() {
 		width = 12; pop_init = 50; infected_init = 5; mask_percent = 40;
 		
+		std::cout << "SET PARAMETERS" << std::endl;
+		std::cout << "*************************" << std::endl;
+		std::cout << std::endl;
+
 		std::cout << "Virus transmission rate: ";
 		std::cin >> t_rate;
 
@@ -72,8 +79,7 @@ public:
 	int mask_eff;
 	int f_rate;
 	int b_rate;
-	static Sim* getInstance();
 	void setup();
-	void begin();
+	bool begin();
 	void update_stats(sf::Time);
 };
