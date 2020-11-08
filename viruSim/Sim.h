@@ -30,7 +30,7 @@ class Sim
 	std::vector<sf::Text>p_v;
 	static Sim* instance;
 	Sim() {
-		width = 9; pop_init = 100; infected_init = 0; mask_percent = 0;
+		width = 10; pop_init = 100; infected_init = 1; mask_percent = 40;
 
 		/*
 		std::cout << "Virus transmission rate: ";

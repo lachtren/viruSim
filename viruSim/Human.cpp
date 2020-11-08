@@ -5,10 +5,9 @@ sf::Color mask_color(0, 247, 30, 255);
 sf::Color infect_color(200, 0, 30, 255);
 sf::Color dead(30, 30, 30, 255);
 const int window_size = 800; //830x830 that starts at 30x30
-int section;
-int width = 9; //Link with one in human.h at somepoint
-int r = (1000 / (pow(width, 2))); // link with one in human.h
-int num_of_sections = window_size / r; //TODO: get area and replace 12 with a var
+//int width = 9; //Link with one in human.h at somepoint
+//int r = (1000 / (pow(width, 2))); // link with one in human.h
+//int num_of_sections = window_size / r; //TODO: get area and replace 12 with a var
 
 //draw human
 void Human::draw(sf::RenderWindow &wnd)
@@ -87,7 +86,7 @@ sf::Vector2f Human::get_pos()
 
 void Human::update_section()
 {
-	
+	int num_of_sections = window_size / r;
 	//std::cout << num_of_sections << std::endl;
 	for (int i = 1; i < num_of_sections+1; i++) {
 		int left_bound = 30 + (i - 1) * window_size / num_of_sections;
