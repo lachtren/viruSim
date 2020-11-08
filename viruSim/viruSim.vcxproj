@@ -152,14 +152,12 @@
     <ClCompile Include="HumanManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Sim.cpp" />
-    <ClCompile Include="SliderSFML.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Human.h" />
     <ClInclude Include="HumanManager.h" />
     <ClInclude Include="SFMLbase.h" />
     <ClInclude Include="Sim.h" />
-    <ClInclude Include="SliderSFML.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
