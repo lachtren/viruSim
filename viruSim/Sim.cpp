@@ -74,6 +74,13 @@ void Sim::check_mouse() {
 		if (mouse_pos.x >= 916 && mouse_pos.x <= 916 + 240) {
 			if (mouse_pos.y >= 550 && mouse_pos.y <= 550 + 90) {
 				quit_button = 1;
+				exit_button = 0;
+			}
+		}
+		if (mouse_pos.x >= 1020 && mouse_pos.x <= 1020 + 172) {
+			if (mouse_pos.y >= 825 && mouse_pos.y <= 825 + 71) {
+				exit_button = 1;
+				quit_button = 0;
 			}
 		}
 	}
@@ -113,9 +120,16 @@ void Sim::load_params() {
 
 void Sim::load_buttons() {
 	
+
 	if (!new_p_text.loadFromFile("Assets/new_params.png", sf::IntRect(0,0,240,90))) {
 	}
 
+	if (!quit_text.loadFromFile("Assets/ExitButton.png", sf::IntRect(0, 0, 172, 71))) {
+
+	}
+
+	quit_spr.setTexture(quit_text);
+	quit_spr.setPosition(sf::Vector2f(1020.f, 825.f));
 	new_p_spr.setTexture(new_p_text);
 	new_p_spr.setPosition(sf::Vector2f(916.f, 550.f));
 }
@@ -196,15 +210,15 @@ void Sim::update_stats(sf::Time dt) {
 /*
 Main simulation loop
 */
-void Sim::begin() {
-	while (wnd->isOpen() && quit_button == false)
+bool Sim::begin() {
+	while (!exit_button && !quit_button)
 	{
 		sf::Time dt = clock.restart();
 		sf::Event event;
 		while (wnd->pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
-				wnd->close();
+				exit_button = true;
 		}
 		hm->update(dt);
 		hm->check_collision(dt);
@@ -216,10 +230,11 @@ void Sim::begin() {
 		hm->draw(*wnd);
 		display_text(*wnd, p_v, s_v);
 		wnd->draw(new_p_spr);
+		wnd->draw(quit_spr);
 		wnd->display();
-		check_mouse();
-		
+		check_mouse();	
 	}
 	hm->clear();
 	wnd->close();
+	return exit_button;
 }

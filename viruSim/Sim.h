@@ -15,6 +15,7 @@ class Sim
 	int deceased =0;
 	int stats_timer = 0;
 	bool quit_button = false;
+	bool exit_button = false;
 	float width;
 	int pop_init;
 	sf::Font font;
@@ -40,6 +41,9 @@ class Sim
 	sf::Sprite new_p_spr;
 	sf::Texture new_p_text;
 
+	sf::Sprite quit_spr;
+	sf::Texture quit_text;
+
 public:
 	
 
@@ -47,6 +51,11 @@ public:
 		width = 12; pop_init = 50; infected_init = 5; mask_percent = 50;
 		mask_eff = 100;
 		b_rate = 20;
+		width = 12; pop_init = 50; infected_init = 5; mask_percent = 40;
+		
+		std::cout << "SET PARAMETERS" << std::endl;
+		std::cout << "*************************" << std::endl;
+		std::cout << std::endl;
 
 		std::cout << "Virus transmission rate: ";
 		std::cin >> t_rate;
@@ -71,11 +80,12 @@ public:
 
 public:
 	
-	
-	
-	
-	static Sim* getInstance();
+
+	int t_rate;
+	int mask_eff;
+	int f_rate;
+	int b_rate;
 	void setup();
-	void begin();
+	bool begin();
 	void update_stats(sf::Time);
 };
