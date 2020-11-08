@@ -19,7 +19,6 @@ void HumanManager::push_back(Human h)
 //Update position of all Humans
 void HumanManager::update(sf::Time dt)
 {
-	std::cout << v.size() << std::endl;
 	for (auto i = v.begin(); i != v.end(); i++)
 	{
 		i->check_wall();
@@ -207,6 +206,12 @@ void HumanManager::clear() {
 
 int HumanManager::population() {
 	return v.size();
+}
+
+int HumanManager::deceased() {
+	return std::count_if(v.begin(), v.end(), [](Human h) {
+		return h.deceased;
+		});
 }
 
 void HumanManager::update_collisions(sf::Time dt) {

@@ -42,6 +42,8 @@ void Human::update_color(float area)
 		break;
 	case 4:
 		circle.setFillColor(dead);
+		circle.setOutlineColor(dead);
+		circle.setOutlineThickness(-r / 3);
 	}
 }
 
